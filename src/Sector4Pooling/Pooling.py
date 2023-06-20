@@ -19,7 +19,7 @@ def repeat_mat_in_nch_channels(mat,nch):
     return res;
 
 
-
+### example https://data-flair.training/blogs/keras-custom-layers/
 class Sector4Pooling2D(Layer):
     def  __init__(self,factor=0.5,**kwargs):
         if factor<=0 or factor >=1.0 :

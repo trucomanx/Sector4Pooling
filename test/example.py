@@ -3,18 +3,28 @@ import sys
 
 sys.path.append('../src')
 
+####################
+# Variables
+
+import numpy as np
+
+dim1=32;
+dim2=32;
+nch=2;
+
+a=np.linspace(1,dim1*dim2*nch,dim1*dim2*nch);
+
+input_data  = a.reshape((1,dim1,dim2,nch));
+
+####################
+# Creating the model
+
+import tensorflow as tf
 from Sector4Pooling import Sector4Pooling2D
 
-################################################################################
-from tensorflow.keras import Sequential
+input_shape=(dim1, dim2,nch);
 
-d1=32;
-d2=32;
-ch=2;
-
-input_shape=(d1, d2,ch);
-
-model = Sequential([
+model = tf.keras.Sequential([
     Sector4Pooling2D(factor=0.6,input_shape=input_shape)
 ])
 
@@ -22,12 +32,9 @@ model.compile(loss='crossentropy', optimizer='adam', metrics=['accuracy'])
 
 model.summary()
 
-################################################################################
+####################
+# Applying the model
 
-import numpy as np
-a=np.linspace(1,d1*d2*ch,d1*d2*ch);
-
-input_data  = a.reshape((1,d1,d2,ch));
 output_data = model.predict(input_data);
 
 #print('input_data:\n',input_data);
