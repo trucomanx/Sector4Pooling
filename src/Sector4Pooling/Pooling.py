@@ -63,8 +63,6 @@ class Sector4Pooling2D(Layer):
         
         self.built = True
 
-    # this self.built is necessary .
-
     def call(self,x):
         #print('');
         
