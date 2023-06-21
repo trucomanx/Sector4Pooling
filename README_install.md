@@ -7,11 +7,11 @@ Install the requirements.
 
 Download the source code
 
-    git clone https://github.com/trucomanx/Sector4Pooling
+    git clone https://github.com/trucomanx/SectorPooling
 
-The next command generates the `dist/Sector4Pooling-VERSION.tar.gz` file.
+The next command generates the `dist/SectorPooling-VERSION.tar.gz` file.
 
-    cd Sector4Pooling/src
+    cd SectorPooling/src
     python setup.py sdist
 
 For more informations use `python setup.py --help-commands`
@@ -20,4 +20,4 @@ For more informations use `python setup.py --help-commands`
 
 Install the packaged library
 
-    pip3 install dist/Sector4Pooling-VERSION.tar.gz
+    pip3 install dist/SectorPooling-VERSION.tar.gz

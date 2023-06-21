@@ -5,7 +5,7 @@ sys.path.append('src')
 
 
 import tensorflow as tf
-from Sector4Pooling import Sector4Pooling2D
+from SectorPooling import Sector4Pooling2D
 
 input_shape=(512, 512,3);
 

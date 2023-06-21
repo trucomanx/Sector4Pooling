@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import sys
-
 sys.path.append('../src')
 
 ####################
@@ -8,6 +7,7 @@ sys.path.append('../src')
 
 import numpy as np
 
+factor=0.5;
 dim1=32;
 dim2=32;
 nch=2;
@@ -20,12 +20,12 @@ input_data  = a.reshape((1,dim1,dim2,nch));
 # Creating the model
 
 import tensorflow as tf
-from Sector4Pooling import Sector4Pooling2D
+from SectorPooling import Sector4Pooling2D
 
 input_shape=(dim1, dim2,nch);
 
 model = tf.keras.Sequential([
-    Sector4Pooling2D(factor=0.6,input_shape=input_shape)
+    Sector4Pooling2D(factor=factor,input_shape=input_shape)
 ])
 
 model.compile(loss='crossentropy', optimizer='adam', metrics=['accuracy'])

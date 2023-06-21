@@ -1,14 +1,14 @@
-# Install Sector4Pooling
+# Install SectorPooling
 
-Install Sector4Pooling following https://github.com/trucomanx/Sector4Pooling/blob/main/README_install.md 
+Install SectorPooling following https://github.com/trucomanx/SectorPooling/blob/main/README_install.md 
 
-# Sector4Pooling example code
+# SectorPooling example code
 
-The next code shows an example use of Sector4Pooling library.
+The next code shows an example use of SectorPooling library.
 
 ```python
 import tensorflow as tf
-from Sector4Pooling import Sector4Pooling2D
+from SectorPooling import Sector4Pooling2D
 
 input_shape=(512, 512,3);
 
@@ -23,6 +23,6 @@ model.summary()
 
 ```
 
-# Sector4Pooling example files
+# SectorPooling example files
 
 Example files can be found at [example.py](example.py).

@@ -21,11 +21,19 @@ def repeat_mat_in_nch_channels(mat,nch):
 
 ### example https://data-flair.training/blogs/keras-custom-layers/
 class Sector4Pooling2D(Layer):
-    def  __init__(self,factor=0.5,**kwargs):
+    def  __init__(self,factor=0.618,**kwargs):
         if factor<0.5 or factor >=1.0 :
             sys.error('factor should be <0,1.0>. factor:'+str(factor));
         self.factor=factor;
         super(Sector4Pooling2D,self).__init__(**kwargs)
+    
+    def get_config(self): # util when save json tensorflow model
+        config = super().get_config()
+        config.update({
+            "factor": self.factor
+        })
+        return config
+    
     
     def build(self,input_shape):
         
