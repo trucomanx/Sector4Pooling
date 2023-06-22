@@ -50,12 +50,14 @@ def create_model(   file_of_weight='',
 
 
 def save_model_stat_kfold(mydict, fpath,sep=','):
+    outdict={};
     with open(fpath, 'w') as csv_file:  
         myvalues=[];
         mykeys=[];
         for key, value in mydict.items():
             mykeys.append(key);
             myvalues.append(value);
+            outdict[key+'_MEAN']=np.mean(value);
         
         N=len(mykeys);
         L=len(myvalues[0]);
@@ -75,7 +77,7 @@ def save_model_stat_kfold(mydict, fpath,sep=','):
                 else:
                     csv_file.write('\n');
 
-
+    return outdict;
 
 from keras.utils.layer_utils import count_params
 def save_model_parameters(model, fpath):

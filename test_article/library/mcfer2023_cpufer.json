@@ -1,0 +1,7 @@
+{
+    "dataset_csv_train_file":"/mnt/boveda/DATASETs/FACE-EMOTION/mcfer_v1.0/archive/train/training_labels.csv",
+    "dataset_csv_test_file" :"/mnt/boveda/DATASETs/FACE-EMOTION/mcfer_v1.0/archive/test/test_labels.csv",
+    "dataset_train_base_dir":"/mnt/boveda/DATASETs/FACE-EMOTION/mcfer_v1.0/archive/train",
+    "nout": 7,
+    "input_shape":[224,224,3]
+}

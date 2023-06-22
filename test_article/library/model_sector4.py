@@ -5,8 +5,10 @@ from SectorPooling import Sector4Pooling2D
 import os
 import tensorflow as tf
 
-    
-def create_model_sector4(file_of_weight='',input_shape=(224,224,3),nout=7,enable_summary=False):
+FUNC_ACT=layer = tf.keras.layers.LeakyReLU();
+
+
+def create_model_sector4(file_of_weight='',input_shape=(224,224,3),nout=7,enable_summary=False, factor=0.5):
     '''
     Retorna un modelo para la clasificación.
     Adicionalmente, si el archivo `file_of_weight` existe los pesos son cargados.
@@ -21,36 +23,32 @@ def create_model_sector4(file_of_weight='',input_shape=(224,224,3),nout=7,enable
     modelo = tf.keras.Sequential([
         tf.keras.layers.Conv2D( 16, kernel_size=11, padding="same", activation=FUNC_ACT, input_shape=input_shape),
         tf.keras.layers.Conv2D(  4, kernel_size= 9, padding="same", activation=FUNC_ACT),
-        Sector4Pooling2D(factor=0.5),
-        tf.keras.layers.Conv2D(  4, kernel_size=1, padding="same", activation=FUNC_ACT),
+        tf.keras.layers.MaxPooling2D( pool_size=(2, 2)),
         
         #
         
         tf.keras.layers.Conv2D( 16, kernel_size=9, padding="same", activation=FUNC_ACT),
         tf.keras.layers.Conv2D(  4, kernel_size=7, padding="same", activation=FUNC_ACT),
-        Sector4Pooling2D(factor=0.5),
-        tf.keras.layers.Conv2D(  4, kernel_size=1, padding="same", activation=FUNC_ACT),
+        tf.keras.layers.MaxPooling2D( pool_size=(2, 2)),
         
-        #tf.keras.layers.BatchNormalization(),
-        
+        tf.keras.layers.BatchNormalization(),
         
         tf.keras.layers.Conv2D( 16, kernel_size=7, padding="same", activation=FUNC_ACT),
         tf.keras.layers.Conv2D(  4, kernel_size=5, padding="same", activation=FUNC_ACT),
-        Sector4Pooling2D(factor=0.5),
-        tf.keras.layers.Conv2D(  4, kernel_size=1, padding="same", activation=FUNC_ACT),
+        tf.keras.layers.MaxPooling2D( pool_size=(2, 2)),
         
         #
         
         tf.keras.layers.Conv2D( 16, kernel_size=5, padding="same", activation=FUNC_ACT),
         tf.keras.layers.Conv2D(  4, kernel_size=3, padding="same", activation=FUNC_ACT),
-        Sector4Pooling2D(factor=0.5),
+        Sector4Pooling2D(factor=factor),
         tf.keras.layers.Conv2D(  4, kernel_size=1, padding="same", activation=FUNC_ACT),
         
         #tf.keras.layers.BatchNormalization(),
         
         tf.keras.layers.Conv2D( 16, kernel_size=3, padding="same", activation=FUNC_ACT),
         tf.keras.layers.Conv2D(  4, kernel_size=3, padding="same", activation=FUNC_ACT),
-        Sector4Pooling2D(factor=0.5),
+        Sector4Pooling2D(factor=factor),
         tf.keras.layers.Conv2D(  4, kernel_size=1, padding="same", activation=FUNC_ACT),
         
         #

@@ -1,0 +1,7 @@
+{
+    "dataset_csv_train_file":"/mnt/boveda/DATASETs/FACE-EMOTION/CK+48/CK+48/labels.csv",
+    "dataset_csv_test_file" :"/mnt/boveda/DATASETs/FACE-EMOTION/CK+48/CK+48/labels.csv",
+    "dataset_train_base_dir":"/mnt/boveda/DATASETs/FACE-EMOTION/CK+48/CK+48",
+    "nout": 5,
+    "input_shape":[96,96,3]
+}

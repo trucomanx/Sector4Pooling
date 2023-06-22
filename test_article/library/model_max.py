@@ -31,7 +31,7 @@ def create_model_max(file_of_weight='',input_shape=(224,224,3),nout=7,enable_sum
         tf.keras.layers.Conv2D(  4, kernel_size=7, padding="same", activation=FUNC_ACT),
         tf.keras.layers.MaxPooling2D( pool_size=(2, 2)),
         
-        #tf.keras.layers.BatchNormalization(),
+        tf.keras.layers.BatchNormalization(),
         
         tf.keras.layers.Conv2D( 16, kernel_size=7, padding="same", activation=FUNC_ACT),
         tf.keras.layers.Conv2D(  4, kernel_size=5, padding="same", activation=FUNC_ACT),
