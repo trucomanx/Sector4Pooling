@@ -103,4 +103,127 @@ class Sector4Pooling2D(Layer):
         output_shape=(input_shape[0],Dim1,Dim2,Ch);
         #print('\noutput_shape\n',output_shape)
         return output_shape;
+
+#########################################################################################################
+#########################################################################################################
+'''
+class SectorNPooling2D(Layer):
+    def  __init__(self,factor=0.618,sector=0,**kwargs):
+        if factor<0.5 or factor >=1.0 :
+            sys.error('factor should be <0,1.0>. factor:'+str(factor));
+        if sector!=0 and sector!=1 and sector!=2 and sector!=3:
+            sys.error('sector should be [0,1,2,3]. sector:'+str(sector));
+            
+        self.factor=factor;
+        self.sector=sector;
+        super(Sector4Pooling2D,self).__init__(**kwargs)
+    
+    def get_config(self): # util when save json tensorflow model
+        config = super().get_config()
+        config.update({
+            "factor": self.factor,
+            "sector": self.sector
+        })
+        return config
+    
+    
+    def build(self,input_shape):
         
+        self.Dim1=int(math.ceil(input_shape[1]*self.factor));
+        self.Dim2=int(math.ceil(input_shape[2]*self.factor));
+        self.Ch  =int(input_shape[3]*4);
+        
+        if   self.sector==0:
+            Mx=np.eye(self.Dim1);
+            My=np.zeros((self.Dim1,input_shape[1]-self.Dim1));
+            tmp=np.concatenate((Mx,My),axis=1);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.left=tf.constant(tmp, dtype=tf.float32);
+            
+            Mx=np.eye(self.Dim2);
+            My=np.zeros((input_shape[2]-self.Dim2,self.Dim2));
+            tmp=np.concatenate((Mx,My),axis=0);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.right=tf.constant(tmp, dtype=tf.float32);
+        
+        elif self.sector==1:
+            Mx=np.eye(self.Dim1);
+            My=np.zeros((self.Dim1,input_shape[1]-self.Dim1));
+            tmp=np.concatenate((My,Mx),axis=1);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.left=tf.constant(tmp, dtype=tf.float32);
+            
+            Mx=np.eye(self.Dim2);
+            My=np.zeros((input_shape[2]-self.Dim2,self.Dim2));
+            tmp=np.concatenate((Mx,My),axis=0);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.right=tf.constant(tmp, dtype=tf.float32);
+        
+        elif self.sector==2:
+            Mx=np.eye(self.Dim1);
+            My=np.zeros((self.Dim1,input_shape[1]-self.Dim1));
+            tmp=np.concatenate((Mx,My),axis=1);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.left=tf.constant(tmp, dtype=tf.float32);
+            
+            Mx=np.eye(self.Dim2);
+            My=np.zeros((input_shape[2]-self.Dim2,self.Dim2));
+            tmp=np.concatenate((My,Mx),axis=0);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.right=tf.constant(tmp, dtype=tf.float32);
+
+        elif self.sector==3:
+            Mx=np.eye(self.Dim1);
+            My=np.zeros((self.Dim1,input_shape[1]-self.Dim1));
+            tmp=np.concatenate((My,Mx),axis=1);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.left=tf.constant(tmp, dtype=tf.float32);
+            
+            Mx=np.eye(self.Dim2);
+            My=np.zeros((input_shape[2]-self.Dim2,self.Dim2));
+            tmp=np.concatenate((My,Mx),axis=0);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.right=tf.constant(tmp, dtype=tf.float32);
+        
+        else:
+            sys.exit('Sector should be [0,1,2,3], sector:'+str(self.sector));
+        
+        self.built = True
+
+    def call(self,x):
+        #print('');
+        
+        if   self.sector==0:
+            tmp11 = tf.einsum("ebd,abcd->aecd", self.left,x         )
+            out   = tf.einsum("abcd,ced->abed", tmp11    ,self.right)
+            #print('out.shape',out.shape)
+        
+        elif self.sector==1:
+            tmp21 = tf.einsum("ebd,abcd->aecd", self.left,x         )
+            out   = tf.einsum("abcd,ced->abed", tmp21    ,self.right)
+            #print('out.shape',out.shape)
+            
+        elif self.sector==2:
+            tmp12 = tf.einsum("ebd,abcd->aecd", self.left,x         )
+            out   = tf.einsum("abcd,ced->abed", tmp12    ,self.right)
+            #print('out.shape',out.shape)
+        
+        elif self.sector==3:
+            tmp22 = tf.einsum("ebd,abcd->aecd", self.left,x         )
+            out   = tf.einsum("abcd,ced->abed", tmp22    ,self.right)
+            #print('out.shape',out.shape)
+            
+        else:
+            sys.exit('Sector should be [0,1,2,3], sector:'+str(self.sector))
+        
+        return out
+
+    def compute_output_shape(self,input_shape):
+        Dim1=int(math.ceil(input_shape[1]*self.factor));
+        Dim2=int(math.ceil(input_shape[2]*self.factor));
+        Ch  =int(input_shape[3]);
+        
+        output_shape=(input_shape[0],Dim1,Dim2,Ch);
+        
+        return output_shape;
+'''        
