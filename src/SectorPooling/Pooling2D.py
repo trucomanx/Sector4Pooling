@@ -106,7 +106,7 @@ class Sector4Pooling2D(Layer):
 
 #########################################################################################################
 #########################################################################################################
-'''
+
 class SectorNPooling2D(Layer):
     def  __init__(self,factor=0.618,sector=0,**kwargs):
         if factor<0.5 or factor >=1.0 :
@@ -116,7 +116,7 @@ class SectorNPooling2D(Layer):
             
         self.factor=factor;
         self.sector=sector;
-        super(Sector4Pooling2D,self).__init__(**kwargs)
+        super(SectorNPooling2D,self).__init__(**kwargs)
     
     def get_config(self): # util when save json tensorflow model
         config = super().get_config()
@@ -149,19 +149,6 @@ class SectorNPooling2D(Layer):
         elif self.sector==1:
             Mx=np.eye(self.Dim1);
             My=np.zeros((self.Dim1,input_shape[1]-self.Dim1));
-            tmp=np.concatenate((My,Mx),axis=1);
-            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
-            self.left=tf.constant(tmp, dtype=tf.float32);
-            
-            Mx=np.eye(self.Dim2);
-            My=np.zeros((input_shape[2]-self.Dim2,self.Dim2));
-            tmp=np.concatenate((Mx,My),axis=0);
-            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
-            self.right=tf.constant(tmp, dtype=tf.float32);
-        
-        elif self.sector==2:
-            Mx=np.eye(self.Dim1);
-            My=np.zeros((self.Dim1,input_shape[1]-self.Dim1));
             tmp=np.concatenate((Mx,My),axis=1);
             tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
             self.left=tf.constant(tmp, dtype=tf.float32);
@@ -171,6 +158,22 @@ class SectorNPooling2D(Layer):
             tmp=np.concatenate((My,Mx),axis=0);
             tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
             self.right=tf.constant(tmp, dtype=tf.float32);
+        
+        elif self.sector==2:
+        
+            Mx=np.eye(self.Dim1);
+            My=np.zeros((self.Dim1,input_shape[1]-self.Dim1));
+            tmp=np.concatenate((My,Mx),axis=1);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.left=tf.constant(tmp, dtype=tf.float32);
+            
+            Mx=np.eye(self.Dim2);
+            My=np.zeros((input_shape[2]-self.Dim2,self.Dim2));
+            tmp=np.concatenate((Mx,My),axis=0);
+            tmp=repeat_mat_in_nch_channels(tmp,input_shape[3]);
+            self.right=tf.constant(tmp, dtype=tf.float32);
+            
+
 
         elif self.sector==3:
             Mx=np.eye(self.Dim1);
@@ -196,25 +199,23 @@ class SectorNPooling2D(Layer):
         if   self.sector==0:
             tmp11 = tf.einsum("ebd,abcd->aecd", self.left,x         )
             out   = tf.einsum("abcd,ced->abed", tmp11    ,self.right)
-            #print('out.shape',out.shape)
-        
-        elif self.sector==1:
-            tmp21 = tf.einsum("ebd,abcd->aecd", self.left,x         )
-            out   = tf.einsum("abcd,ced->abed", tmp21    ,self.right)
-            #print('out.shape',out.shape)
             
-        elif self.sector==2:
+        elif self.sector==1:
             tmp12 = tf.einsum("ebd,abcd->aecd", self.left,x         )
             out   = tf.einsum("abcd,ced->abed", tmp12    ,self.right)
-            #print('out.shape',out.shape)
+        
+        elif self.sector==2:
+            tmp21 = tf.einsum("ebd,abcd->aecd", self.left,x         )
+            out   = tf.einsum("abcd,ced->abed", tmp21    ,self.right)
         
         elif self.sector==3:
             tmp22 = tf.einsum("ebd,abcd->aecd", self.left,x         )
             out   = tf.einsum("abcd,ced->abed", tmp22    ,self.right)
-            #print('out.shape',out.shape)
             
         else:
             sys.exit('Sector should be [0,1,2,3], sector:'+str(self.sector))
+        
+        #print('out.shape',out.shape)
         
         return out
 
@@ -226,4 +227,4 @@ class SectorNPooling2D(Layer):
         output_shape=(input_shape[0],Dim1,Dim2,Ch);
         
         return output_shape;
-'''        
+        

@@ -8,8 +8,8 @@ sys.path.append('../src')
 import numpy as np
 
 factor=0.5;
-dim1=32;
-dim2=32;
+dim1=5;
+dim2=7;
 nch=2;
 
 a=np.linspace(1,dim1*dim2*nch,dim1*dim2*nch);
@@ -37,9 +37,9 @@ model.summary()
 
 output_data = model.predict(input_data);
 
-#print('input_data:\n',input_data);
+print('input_data:\n',input_data);
 print('input_data.shape:\n',input_data.shape);
-#print('output_data:\n',output_data);
+print('output_data:\n',output_data);
 print('output_data.shape:\n',output_data.shape);
 
 
