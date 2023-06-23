@@ -20,7 +20,7 @@ input_data  = a.reshape((1,dim1,dim2,nch));
 # Creating the model
 
 import tensorflow as tf
-from SectorPooling import Sector4Pooling2D
+from SectorPooling.Layer2D import Sector4Pooling2D
 
 input_shape=(dim1, dim2,nch);
 

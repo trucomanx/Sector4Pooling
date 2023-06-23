@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import sys
-from SectorPooling import Sector4Pooling2D
+from SectorPooling.Layer2D import Sector4Pooling2D
 
 import os
 import tensorflow as tf

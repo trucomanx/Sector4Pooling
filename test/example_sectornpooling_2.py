@@ -20,7 +20,7 @@ factor=0.618;
 sector=3;
 
 import tensorflow as tf
-from SectorPooling import SectorNPooling2D
+from SectorPooling.Layer2D import SectorNPooling2D
 
 input_shape=image.shape;
 

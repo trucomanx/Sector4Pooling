@@ -16,7 +16,7 @@ input_data = image.reshape((1,image.shape[0],image.shape[1],1));
 factor=0.618;
 
 import tensorflow as tf
-from SectorPooling import Sector4Pooling2D
+from SectorPooling.Layer2D import Sector4Pooling2D
 
 input_shape=(image.shape[0], image.shape[1],1);
 
