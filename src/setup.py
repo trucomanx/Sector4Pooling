@@ -25,7 +25,8 @@ setup(
     keywords=['pooling','cnn'],
     install_requires=[
        "tensorflow",
-       "numpy" #"Django >= 1.1.1",
+       "numpy", #"Django >= 1.1.1",
+       "pydot"
     ],
 )
 
