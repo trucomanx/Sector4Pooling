@@ -41,18 +41,25 @@ factor=0.55;
 min_size=5;
 input_shape=(128,128,3);
 
-
 model = tf.keras.Sequential([
     tf.keras.layers.Conv2D( 3, kernel_size=9, padding="same", activation=LeakyReLU(), input_shape=input_shape),
     model_sectortree2d( input_shape=(128,128,3),
                         blocks=[block1,block2,block3],
                         factor=factor,
                         min_size=min_size,
-                        name='LST_',
+                        name='LST',
                         to_file='layer_tree.png'),
     tf.keras.layers.Conv2D( 64, kernel_size=1, padding="same", activation=LeakyReLU()),
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(32),
 ])
 
+
 model.summary()
+
+
+
+
+
+
+

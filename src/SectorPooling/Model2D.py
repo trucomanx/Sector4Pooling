@@ -10,17 +10,31 @@ from tensorflow.keras import backend as K
 
 from SectorPooling.Layer2D import SectorNPooling2D
 
+def change_layer_list_labels(layer_list,prefix):
+    for n in range(len(layer_list)):
+        layer_list[n]._name = prefix + layer_list[n]._name;
+        try: 
+            change_layer_list_labels(layer_list[n].layers,prefix);
+        except:
+            pass;
+
+def change_model_labels(model,prefix):
+    model._name = prefix+model._name;
+    change_layer_list_labels(model.layers,prefix);
+
 
 def sectortree2d_recursive_func(entrada,blocks,factor,min_size,name):
     work=[None,None,None,None];
     out=[];
     
     for n in range(4):
+        name_n=name+str(n);
+        
         tmp = SectorNPooling2D(factor=factor,sector=n)(entrada);
         
         model_block=tf.keras.models.clone_model(blocks[0]);
-        
-        model_block._name=name+str(n);
+        #model_block._name=name_n;
+        change_model_labels(model_block,prefix=name_n);
         
         tmp = model_block(tmp);
         
@@ -29,7 +43,7 @@ def sectortree2d_recursive_func(entrada,blocks,factor,min_size,name):
             new_blocks=blocks[1:];
         
         if tmp.shape[1]*factor>=min_size and tmp.shape[2]*factor>=min_size:
-            work[n]=sectortree2d_recursive_func(tmp,new_blocks,factor,min_size,name+str(n));
+            work[n]=sectortree2d_recursive_func(tmp,new_blocks,factor,min_size,name_n);
         else:
             work[n]=[tmp];
         
