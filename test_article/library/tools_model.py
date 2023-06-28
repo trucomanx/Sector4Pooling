@@ -4,7 +4,8 @@ import sys
 
 import numpy as np
 
-import model_sectortree as mt
+import model_sectortree  as mt
+import model_sectortree2 as mt2
 import model_sector4 as ms
 import model_max     as mm  
 
@@ -39,7 +40,7 @@ def create_model(   file_of_weight='',
         print("Loaded model_sectortree");
     
     elif  model_type=='model_sectortree2':
-        model = mt.create_model_sectortree2(file_of_weight=file_of_weight,
+        model = mt2.create_model_sectortree2(file_of_weight=file_of_weight,
                                             input_shape=input_shape,
                                             nout=nout,
                                             enable_summary=enable_summary);
