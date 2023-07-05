@@ -8,7 +8,7 @@ import tensorflow as tf
 FUNC_ACT=layer = tf.keras.layers.LeakyReLU();
 
 
-def create_model_sectortree2(file_of_weight='',input_shape=(224,224,3),nout=7,enable_summary=False, factor=0.5):
+def create_model_sectortree3(file_of_weight='',input_shape=(224,224,3),nout=7,enable_summary=False, factor=0.5):
     '''
     Retorna un modelo para la clasificación.
     Adicionalmente, si el archivo `file_of_weight` existe los pesos son cargados.

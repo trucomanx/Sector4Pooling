@@ -6,6 +6,7 @@ import numpy as np
 
 import model_sectortree  as mt
 import model_sectortree2 as mt2
+import model_sectortree3 as mt3
 import model_sector4 as ms
 import model_max     as mm  
 
@@ -43,8 +44,17 @@ def create_model(   file_of_weight='',
         model = mt2.create_model_sectortree2(file_of_weight=file_of_weight,
                                             input_shape=input_shape,
                                             nout=nout,
+                                            factor=0.53,
                                             enable_summary=enable_summary);
         print("Loaded model_sectortree2");
+    
+    elif  model_type=='model_sectortree3':
+        model = mt3.create_model_sectortree3(file_of_weight=file_of_weight,
+                                            input_shape=input_shape,
+                                            nout=nout,
+                                            factor=0.53,
+                                            enable_summary=enable_summary);
+        print("Loaded model_sectortree3");
     
     elif model_type=='model_max':
         model = mm.create_model_max(file_of_weight=file_of_weight,
