@@ -58,6 +58,7 @@ def model_sectortree2d(input_shape,blocks,factor=0.618,name=None,to_file=None):
     
     out=sectortree2d_recursive_func(entrada,blocks,factor,name);
     
+    print('out[0].shape',out[0].shape)
     salida=K.concatenate(out, axis=3);
     
     model = tf.keras.Model(inputs=entrada, outputs=salida)
