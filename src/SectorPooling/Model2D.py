@@ -23,42 +23,40 @@ def change_model_labels(model,prefix):
     change_layer_list_labels(model.layers,prefix);
 
 
-def sectortree2d_recursive_func(entrada,blocks,factor,min_size,name):
-    work=[None,None,None,None];
+def sectortree2d_recursive_func(entrada,blocks:list,factor:float,name:str):
+    SectorList=[None,None,None,None];
     out=[];
     
     for n in range(4):
         name_n=name+str(n);
         
-        tmp = SectorNPooling2D(factor=factor,sector=n)(entrada);
+        tmp_flow = SectorNPooling2D(factor=factor,sector=n)(entrada);
         
         model_block=tf.keras.models.clone_model(blocks[0]);
         #model_block._name=name_n;
+        
         change_model_labels(model_block,prefix=name_n);
         
-        tmp = model_block(tmp);
+        tmp_flow = model_block(tmp_flow);
         
-        new_blocks=blocks;
         if len(blocks)>1:
             new_blocks=blocks[1:];
-        
-        if tmp.shape[1]*factor>=min_size and tmp.shape[2]*factor>=min_size:
-            work[n]=sectortree2d_recursive_func(tmp,new_blocks,factor,min_size,name_n);
+            SectorList[n]=sectortree2d_recursive_func(tmp_flow,new_blocks,factor,name_n);
         else:
-            work[n]=[tmp];
+            SectorList[n]=[tmp_flow];
         
-        out=out+work[n];
+        out=out+SectorList[n];
     
     return out;
 
 
-def model_sectortree2d(input_shape,blocks,factor=0.618,min_size=9,name=None,to_file=None):
+def model_sectortree2d(input_shape,blocks,factor=0.618,name=None,to_file=None):
     if not isinstance(name, str):
         name=str(time.time_ns())+'_';
     
     entrada = tf.keras.layers.Input(shape=input_shape);
     
-    out=sectortree2d_recursive_func(entrada,blocks,factor,min_size,name);
+    out=sectortree2d_recursive_func(entrada,blocks,factor,name);
     
     salida=K.concatenate(out, axis=3);
     
